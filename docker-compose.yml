@@ -68,6 +68,25 @@ services:
     depends_on:
       - elasticsearch
 
+  filebeat:
+    build:
+      context: filebeat/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      # needed to access all docker logs (read only) :
+      - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+      # needed to access additional informations about containers
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - type: bind
+        source: ./filebeat/config/filebeat.yml
+        target: /usr/share/filebeat/filebeat.yml
+        read_only: true
+    networks:
+      - elk
+    depends_on:
+      - logstash
+
   aspnetcoreapp:
     image: anaselhajjaji/high-available-aspnetcore:latest
     ports:
