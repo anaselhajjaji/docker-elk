@@ -68,6 +68,13 @@ services:
     depends_on:
       - elasticsearch
 
+  aspnetcoreapp:
+    image: anaselhajjaji/high-available-aspnetcore:latest
+    ports:
+      - "80:80"
+    networks:
+      - elk
+
 networks:
   elk:
     driver: bridge
