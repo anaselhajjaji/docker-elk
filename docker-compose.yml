@@ -73,6 +73,8 @@ services:
       context: filebeat/
       args:
         ELK_VERSION: $ELK_VERSION
+    # Need to override user so we can access the log files, and docker.sock
+    user: root
     volumes:
       # needed to access all docker logs (read only) :
       - "/var/lib/docker/containers:/var/lib/docker/containers:ro"

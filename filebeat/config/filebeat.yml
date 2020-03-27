@@ -1,1 +1,11 @@
-# Filebeat config
+filebeat.inputs:
+  - type: container
+    paths:
+      - /var/lib/docker/containers/*/*.log
+    json.message_key: log
+    json.keys_under_root: true
+    processors:
+      - add_docker_metadata: ~
+
+output.elasticsearch:
+  hosts: ["logstash:5000"]
