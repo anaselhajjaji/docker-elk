@@ -97,7 +97,7 @@ services:
     networks:
       - elk
     labels:
-      nodetype: "application"
+      enable_filebeat: true
 
 networks:
   elk:

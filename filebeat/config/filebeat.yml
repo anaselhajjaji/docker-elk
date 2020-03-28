@@ -3,16 +3,21 @@
 filebeat.autodiscover:
   providers:
     - type: docker
+      hints.enabled: true
+      json.message_key: log 
       templates:
         - condition:
-            contains:
-              docker.container.labels.nodetype: "application"
+            equals:
+              docker.container.labels.enable_filebeat: "true"
           config:
             - type: docker
               containers.ids:
                 - "${data.docker.container.id}"
-              encoding: utf-8
-              stream: "stdout"
+              json.keys_under_root: true
+              json.add_error_key: false
+processors:
+- add_cloud_metadata: ~
+- add_docker_metadata: ~ 
 
 output.logstash:
   hosts: ["logstash:5044"]
