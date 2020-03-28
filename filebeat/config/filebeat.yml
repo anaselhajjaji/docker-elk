@@ -1,4 +1,4 @@
-#logging.level: debug
+logging.level: debug
 
 filebeat.autodiscover:
   providers:
@@ -16,8 +16,11 @@ filebeat.autodiscover:
               json.keys_under_root: true
               json.add_error_key: false
 processors:
-- add_cloud_metadata: ~
-- add_docker_metadata: ~ 
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~ 
+  # elastic search cant parse the host field, FIXME
+  - drop_fields:
+      fields: ["host"]
 
 output.logstash:
   hosts: ["logstash:5044"]
