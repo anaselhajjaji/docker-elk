@@ -12,4 +12,4 @@ xpack.monitoring.elasticsearch.username: elastic
 xpack.monitoring.elasticsearch.password: changeme
 
 ## Logging
-log.level: debug
+#log.level: debug
